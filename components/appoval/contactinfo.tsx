@@ -6,7 +6,9 @@ import { buttonStyle } from "@/components/common/Helpers/InlineStyles"
 import { Box, Button, Card, Grid } from "@mui/material"
 import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react"
-            
+
+
+
 const ContactInfo = () => {
     const router = useRouter();
     const { globalData, setGlobalData } = useContext(AppContext)
@@ -27,7 +29,6 @@ const ContactInfo = () => {
     }
 
     const handlesubmitData = (val: any, index: any) => {
-        // setArrayData(val)
         let dataClo = [...data];
         dataClo[index]["values"] = val;
         setdata(dataClo);
@@ -79,7 +80,7 @@ const ContactInfo = () => {
                     </Box>
 
                     <Box component='span' mr={2} mb={2}>
-                        <CMButton variant="contained" value="Submit" type="submit" color="primary" onClick={() => setSubmitValue(submitvalue + 1)}></CMButton>
+                        <CMButton variant="contained" value="Submit" type="submit" color="primary" onClick={() => setSubmitValue(submitvalue + 1)}/>
                     </Box>
                 </Box> : null}
             </>}
