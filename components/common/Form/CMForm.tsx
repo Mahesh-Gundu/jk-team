@@ -5,7 +5,7 @@ import { CMAutoComplete } from "../AutoComplete/AutoComplete";
 import { CMToggleSwitch } from "../ToggleSwitch/ToggleSwitch";
 import { useNavigate, useParams } from "react-router-dom";
 // import { useFormik } from 'formik';
-import { Box, Button, Card, CardContent, CircularProgress, Grid, Slider } from "@mui/material";
+import { Box, Button, Card, CardContent, CircularProgress, Grid } from "@mui/material";
 import { CMButton, CMLinkButton } from "../Button/Button";
 import { useFormik } from "formik";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -36,31 +36,6 @@ const TextField = (props: any) => {
         />
     </React.Fragment>
 }
-
-// const RangeField = (props: any) => {
-
-//     const { item, formik, handleChange } = props;
-//     return <React.Fragment>
-//         {formik.errors[item.name] ? (<CMLabel>{item.label}<span style={{ color: "red" }}>*</span> </CMLabel>) : (<CMLabel>{item.label}</CMLabel>)}
-//         <CMTextField disabled={item.disabled}
-//             //  sx={inputStyle}
-//             type={item.type}
-//             name={item.name} placeholder={item.placeholder}
-//             onChange={(e: any) => handleChange(item.name, e)}
-//             error={formik.touched[item.name] && Boolean(formik.errors[item.name])}
-//             helperText={formik.touched[item.name] && formik.errors[item.name]}
-//             value={formik.values[item.name]}
-//             title={formik.values[item.name]}
-//         />
-//         {/* <Slider 
-//         value={formik.values[item.name]}
-//         onChange={(e: any) => handleChange(item.name, e)}
-//         title={formik.values[item.name]}
-
-//         /> */}
-
-//     </React.Fragment>
-// }
 
 const Dropdown = (props: any) => {
     const { item, formik, handleChange } = props;
@@ -144,7 +119,7 @@ export const CMDatePicker = (props: any) => {
             {/* {<span style={{ color: "red" }}>{formik.errors[item.name]}</span>} */}
             {formik.touched[item.name] && formik.errors[item.name] && (
                 <div style={{
-                    color: "#ff3d60", fontFamily: "Arial", fontWeight: 400, fontSize: "0.75rem", lineHeight: 1.66, letterSpacing: "0.03333em", textAlign: "left", marginTop: "4px", marginBottom: "0px", marginRight: "14px", marginLeft: "14px"
+                    color: "#ff3d60", fontFamily:"Arial", fontWeight: 400, fontSize: "0.75rem", lineHeight: 1.66, letterSpacing: "0.03333em", textAlign: "left", marginTop: "4px", marginBottom: "0px", marginRight: "14px", marginLeft: "14px"
                 }}>{formik.errors[item.name]}</div>)
             }
         </LocalizationProvider>
@@ -161,22 +136,6 @@ const FileUpload = (props: any) => {
             onChange={(e: any) => handleChange(item.name, e)}
             error={formik.touched[item.name] && Boolean(formik.errors[item.name])}
             helperText={formik.touched[item.name] && formik.errors[item.name]}
-        />
-    </React.Fragment>
-}
-const Number = (props: any) => {
-
-    const { item, formik, handleChange } = props;
-    return <React.Fragment>
-        <CMLabel>{item.label}</CMLabel>
-        <CMTextField disabled={item.disabled}
-            //  sx={inputStyle}
-            type={"number"}
-            name={item.name} placeholder={item.placeholder}
-            onChange={(e: any) => handleChange(item.name, e)}
-            error={formik.touched[item.name] && Boolean(formik.errors[item.name])}
-            helperText={formik.touched[item.name] && formik.errors[item.name]}
-            value={formik.values[item.name]}
         />
     </React.Fragment>
 }
@@ -229,27 +188,27 @@ export const CMForm = (props: any) => {
                     json[item] = values[item];
                 }
             })
-            let service: any = type === 'edit' ? props.addService(json, id + "") : props.addService(json);
-            service.then((result: any) => {
-                setGlobalData({
-                    ...globalData,
-                    loading: true
-                });
-                // if(type ==='edit'){
-                //     toast.success("Record Updated Successfully")
-                // }else{
-                //     toast.success("Record Created Successfully")
-                // }
-                // history(routeLinks[props.listPageKey]);
-            },
-                (error: any) => {
-                    setGlobalData({
-                        ...globalData,
-                        loading: false
-                    })
-                    setShowError(true)
-                    setError(error)
-                });
+            // let service: any = type === 'edit' ? props.addService(json, id + "") : props.addService(json);
+            // service.then((result: any) => {
+            //     setGlobalData({
+            //         ...globalData,
+            //         loading: true
+            //     });
+            //     // if(type ==='edit'){
+            //     //     toast.success("Record Updated Successfully")
+            //     // }else{
+            //     //     toast.success("Record Created Successfully")
+            //     // }
+            //     // history(routeLinks[props.listPageKey]);
+            // },
+            //     (error: any) => {
+            //         setGlobalData({
+            //             ...globalData,
+            //             loading: false
+            //         })
+            //         setShowError(true)
+            //         setError(error)
+            //     });
         },
     });
 
@@ -364,19 +323,28 @@ export const CMForm = (props: any) => {
                                                                     <CMDatePicker formik={formik} handleChange={handleChange} item={item} /> :
                                                                     item.type === 'file' ?
                                                                         <FileUpload item={item} formik={formik} handleChange={handleChange} /> :
-                                                                        item.type === 'number' ?
-                                                                            <Number formik={formik} handleChange={handleChange} item={item} /> :
-                                                                            item?.type === 'range' ?
-                                                                                <TextField item={item} formik={formik} handleChange={handleChange} />
-                                                                                :
 
-                                                                                null
+                                                                        null
                                             }
                                         </Grid>
                                     )
                                 })
                             }
                         </Grid>
+                        {/* <Box component='div'
+                            sx={buttonStyle}
+                        >
+                            <Box component='span' mr={2} sx={{ boxShadow: 2 }}>
+                                <CMLinkButton variant="contained" color="secondary" value="Cancel"
+                                    link={props.listPageKey}
+                                />
+                                <Button onClick={handleButton} style={{color:"white",backgroundColor:"black",paddingLeft:"16px",paddingRight:"16px",paddingBottom:"6px",paddingTop:"6px"}}>Cancel</Button>
+                            </Box>
+
+                            <Box component='span' mr={2}>
+                                <CMButton variant="contained" value="Submit" color="primary" type="submit"></CMButton>
+                            </Box>
+                        </Box> */}
                     </CardContent>
                 </Card>
             </form>

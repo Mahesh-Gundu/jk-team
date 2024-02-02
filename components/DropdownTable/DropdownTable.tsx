@@ -40,7 +40,7 @@ const DropdownTable = (props:any) => {
     }
     const columns: readonly any[] = [
         { key: "field_name", label: "Field Name", minWidth: 140 },
-        // { key: "options", label: "Options", minWidth: 140 },
+        { key: "options", label: "Options", minWidth: 140 },
     ];
 
     const addDetails = (val:any) =>{
