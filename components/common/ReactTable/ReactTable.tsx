@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { Button, Tooltip, Typography } from '@mui/material';
+import { Button, Link, Tooltip, Typography } from '@mui/material';
 import { FlexDiv } from '../Flex/Flex';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -62,7 +62,7 @@ const TableList = (props: any) => {
     const [page, setPage] = React.useState(0);
     const [deleteRow, setDeleteRow] = React.useState(null);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const [optionData, setOptionData] = React.useState();
+    const [optionData, setOptionData] = React.useState<any>([]);
 
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
@@ -131,18 +131,17 @@ const TableList = (props: any) => {
         setDeleteRow(null)
         setOpenModal(false)
     }
+    // let OptionsData: any = props?.rows?.map((opt: any) => {
+    //     console.log(opt, "#####")
+    //     let optionvalue: any = opt.options;
+    //     console.log(optionvalue, "#####")
+    //     optionvalue?.map((data: any) => {
+    //         console.log(data, "########")
+    //         optionData.push(data.value)
+    //     })
+    // });
 
-    let OptionsData: any = props?.rows?.map((opt: any) => {
-        console.log(opt, "#####")
-        let optionvalue: any = opt.options;
-        console.log(optionvalue, "#####")
-        optionvalue?.map((data: any) => {
-            console.log(data, "########")
-            setOptionData(data.value)
-        })
-    });
-
-
+    console.log(optionData, "optionData")
     return (
         <>
             <Paper sx={{ width: '100%', overflow: 'hidden', marginTop: "20px" }}>
@@ -160,6 +159,13 @@ const TableList = (props: any) => {
                                         <Typography><b>{column.label}</b></Typography>
                                     </TableCell>
                                 ))}
+
+                                {/* <TableCell
+                                    key={'options'}
+                                    className={style.Tablebg}
+                                >
+                                    <Typography><b>Options</b></Typography>
+                                </TableCell> */}
                                 <TableCell
                                     key={'action'}
                                     className={style.Tablebg}
@@ -179,8 +185,15 @@ const TableList = (props: any) => {
                                                 <TableCell key={column.id} align={column.align}>
                                                     {column.format && typeof value === 'number'
                                                         ? column.format(value)
-                                                        : value}
+                                                        : typeof value === 'object' ?
+                                                            ( value.slice(0,3).map((v: any) => v.value + "," 
+                                                            // && (v.value?.length>1) ? "...see more":''
+                                                            ) + "...Seemore"
+                                                            ) 
+                                                            // :(value.length>1)? "seemore"
+                                                            : value}
                                                 </TableCell>
+
                                             );
                                         })}
 

@@ -46,12 +46,12 @@ export const getToggle = () => {
         setTimeout(() => {
             resolve([
                 {
-                    id: 1,
-                    label: 'Salary Advance'
+                    id: 0,
+                    label: false
                 },
                 {
-                    id: 2,
-                    label: 'Marriage Advance'
+                    id: 1,
+                    label: true
                 }
             ])
         })
@@ -63,88 +63,53 @@ export const getfieldData = () => {
         setTimeout(() => {
             resolve([
                 {
-                    field_name: 'Salary Advance',
+                    fieldname: 'Salary Advance',
                     placeholder: 'Salary Advance',
-                    type: "Text",
+                    type: "text",
                     validation: true,
-                    minlength:"3",
-                    maxlength:"100",
-                    minrange:"",
-                    maxrange:"",
-                    minsize:"",
-                    maxsize:""
+                    name: 'salary_advance'
                 },
                 {
-                    field_name: 'Medical Advance',
+                    fieldname: 'Medical Advance',
                     placeholder: 'Medical Advance', 
-                    type: "Range",
+                    type: "dropdown",
                     validation: false,
-                    minlength:"",
-                    maxlength:"",
-                    minrange:"3",
-                    maxrange:"6",
-                    minsize:"",
-                    maxsize:""
+                    name: 'medical_advance'
                 },
                 {
-                    field_name: 'Education Advance',
+                    fieldname: 'Education Advance',
                     placeholder: 'Education Advance',
-                    type: "File",
+                    type: "file",
                     validation: true,
-                    minlength:"",
-                    maxlength:"",
-                    minrange:"",
-                    maxrange:"",
-                    minsize:"10",
-                    maxsize:"100"
+                    name: 'education_advance'
                 },
                 {
-                    field_name: 'Festival Advance',
+                    fieldname: 'Festival Advance',
                     placeholder: 'Festival Advance',
-                    type: "Date",
+                    type: "date",
                     validation: true,
-                    minlength:"",
-                    maxlength:"",
-                    minrange:"",
-                    maxrange:"",
-                    minsize:"",
-                    maxsize:""
+                    name: 'festival_advance'
                 },
                 {
-                    field_name: 'Marriage Advance',
+                    fieldname: 'Marriage Advance',
                     placeholder: 'Marriage Advance',
-                    type: "Dropdown",
+                    type: "dropdown",
                     validation: true,
-                    minlength:"",
-                    maxlength:"",
-                    minrange:"",
-                    maxrange:"",
-                    minsize:"",
-                    maxsize:""
+                    name: 'marriage_advance'
                 },
                 {
-                    field_name: 'Vehicle Advance',
+                    fieldname: 'Vehicle Advance',
                     placeholder: 'Vehicle Advance',
-                    type: "Text",
+                    type: "text",
                     validation: false,
-                    minlength:"",
-                    maxlength:"",
-                    minrange:"",
-                    maxrange:"",
-                    minsize:"",
-                    maxsize:""
+                    name: 'vehicle_advance'
                 },
                 {
-                    field_name: 'Society Loan',
+                    fieldname: 'Society Loan',
                     placeholder: 'Society Loan',
-                    type: "Dropdown",
+                    type: "dropdown",
                     validation: true,
-                    minlength:"",
-                    maxlength:"",
-                    minrange:"",
-                    maxrange:"",
-                    minsize:"",
-                    maxsize:""
+                    name: 'society_loan'
                 },
             ])
         })
