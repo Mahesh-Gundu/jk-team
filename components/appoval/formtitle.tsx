@@ -1,45 +1,25 @@
-import { Checkbox, FormControlLabel, MenuItem, Radio, RadioGroup, Select, Switch, TextField, Typography } from '@mui/material';
+import { Autocomplete, Checkbox, FormControlLabel, Grid, MenuItem, Radio, RadioGroup, Select, Switch, TextField, Typography } from '@mui/material';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Add, Remove, Edit, Delete } from '@mui/icons-material';
+import { Add, Remove} from '@mui/icons-material';
 import { useContext, useEffect, useState } from 'react';
-import { Container, Button } from 'react-bootstrap';
-import { BiBarChartAlt2 } from "react-icons/bi";
-import { BsBuilding } from "react-icons/bs";
-import { FaPeopleLine } from "react-icons/fa6";
-import { HiBuildingOffice2 } from "react-icons/hi2";
-import { MdEditCalendar } from "react-icons/md";
+import { Button, Container } from 'react-bootstrap';
 import styles from './formtitle.module.scss';
 import { getOptions, getfieldData } from './formtitle.services';
 import { AppContext } from '../common/Helpers/Context/AppContext';
 import { useRouter } from 'next/router';
-import { setIn } from 'formik';
 
 const Approval = (props: any) => {
 
-    const [isAddClicked, setAddClicked] = useState(false);
-    const [isDeleteClicked, setDeleteClicked] = useState(false);
-    const [isEditClicked, setEditClicked] = useState(false);
     const [typeOptions, setTypeOptions] = useState<any>([])
     const [data, setData] = useState<any>([])
+    const [error, setError] = useState<any>(false)
     const { globalData, setGlobalData } = useContext(AppContext)
-    const [section, setSection] = useState<any>()
     const [response, setResponse] = useState<any>()
     const { push } = useRouter();
-    const [indexValue,setIndexValue]=  useState<any>({"1":1})
-
-
+    const [indexValue, setIndexValue] = useState<any>({ "1": 1 })
     const [dataOption, setDataOption] = useState<any>([])
-
-    // const handleToggleClick = () => {
-    //     setToggleOn(!isToggleOn);
-    // };
-    // const [selectedValue, setSelectedValue] = useState('');
-    // const [description,setDescription] = useState('')
-
-    // const handleChange = (event: any) => {
-    //     setSelectedValue(event.target.value);
-    // };
     const [inputValue, setInputValue] = useState<any>({ form_title: "", form_description: "" });
+    
     const handleInputChange = (e: any) => {
         setInputValue({
             ...inputValue,
@@ -53,7 +33,7 @@ const Approval = (props: any) => {
         })
         getfieldData().then((res: any) => {
             setTypeOptions(res)
-            const defObj = { label: res[0].fieldname, type: res[0].type, toggle: res[0].validation, placeholder: "Enter " + res[0].placeholder, name: res[0].name }
+            let name1 = (res[0].field_name.split(" ")).join('_').toLowerCase()
             setData([...data,
             {
                 id: 1,
@@ -61,15 +41,13 @@ const Approval = (props: any) => {
                 layout: "2 Box Layout",
                 multiple: false,
                 heading: "",
-                options: [{ data_options: 1 }],
-                section1: [{ label: res[0].fieldname, type: res[0].type, toggle: res[0].validation, placeholder: "Enter " + res[0].placeholder, name: res[0].name}],
+                options: [{ approval_options: 1 }],
+                section1: [{ label: res[0].field_name, type: res[0].type.toLowerCase(), toggle:false, placeholder: "Enter " + res[0].placeholder, name: name1, minlength: res[0].minlength, maxlength: res[0].maxlength, minrange: res[0].minrange, maxrange: res[0].maxrange, minsize: res[0].minsize, maxsize: res[0].maxsize }],
             }
             ])
-            setSection(defObj)
             setResponse(res)
         })
     }, [])
-
     const handleChange = (i: any, event: any) => {
         let arr = [...data]
         arr[i].approval = event.target.value
@@ -83,42 +61,36 @@ const Approval = (props: any) => {
     }
 
     const handleAddClick = (i: any) => {
-        setAddClicked(true);
         const lastKey = Object.keys(indexValue).pop();
-        setIndexValue({...indexValue,[Number(lastKey)+1]:1})
-        console.log(lastKey,[Number(lastKey)+1],"postkey");
-        
+        setIndexValue({ ...indexValue, [Number(lastKey) + 1]: 1 })
+        console.log(lastKey, [Number(lastKey) + 1], "postkey");
+        let name1 = (response[0].field_name.split(" ")).join('_').toLowerCase()
+
         setData([...data, {
-            id: Number(lastKey)+1,
+            id: Number(lastKey) + 1,
             layout: "2 Box Layout",
             multiple: false,
             approval: "sequential",
             heading: "",
-            options: [{ data_options: 1 }],
-            section1: [{ label: response[0].fieldname, type: response[0].type, toggle: response[0].validation, placeholder: "Enter " + response[0].placeholder, name: response[0].name}]
+            options: [{ approval_options: 1 }],
+            section1: [{
+                label: response[0].field_name, type: response[0].type.toLowerCase(), toggle:false, placeholder: "Enter " + response[0].placeholder, name: name1, minlength: response[0].minlength, maxlength: response[0].maxlength, minrange: response[0].minrange, maxrange: response[0].maxrange, minsize: response[0].minsize, maxsize: response[0].maxsize
+
+            }]
         }])
         console.log(data, "dttaaaaa")
-        
+
     };
-
-    console.log(indexValue,"postI");
-    
-
     const handleDeleteClick = (i: any) => {
-        setDeleteClicked(true);
         let arr = [...data]
         arr.length > 1 ? arr.splice(i, 1) : null
         setData(arr)
 
     };
 
-    const handleEditClick = () => {
-        setEditClicked(true);
-
-    };
     const addDropdown = (id: any, index: any) => {
         let arr = [...data]
-        arr[id].options.push({ data_options: 1 })
+        arr[id].options.push({ approval_options: 1 })
         setData([...arr])
     }
     const removeDropdown = (id: any, index: any) => {
@@ -130,19 +102,14 @@ const Approval = (props: any) => {
         setData([...arr])
 
     }
-    const addInputDropdown = (id: any, index: any,cardid:any) => {
-        // console.log(cardid,"postCardId");
-        
-        // const lastKey:any = Object.keys(indexValue).pop();
-        // const lastValue:any = Object.values(indexValue).pop();
-        const fieldId = indexValue[cardid]+1;
-        console.log(fieldId,"postI","----",cardid);
-        
-        setIndexValue({...indexValue,[cardid]:fieldId})
+    const addInputDropdown = (id: any, index: any, cardid: any) => {
+        const fieldId = indexValue[cardid] + 1;
+        let name1 = (response[0].field_name.split(" ")).join('_').toLowerCase()
+
+        setIndexValue({ ...indexValue, [cardid]: fieldId })
         let arr = [...data]
-        arr[id].section1.push({ label: response[0].fieldname, type: response[0].type, toggle: response[0].validation, placeholder: "Enter " + response[0].placeholder, name: response[0].name+cardid+fieldId })
+        arr[id].section1.push({ label: response[0].field_name, type: response[0].type.toLowerCase(), toggle: false, placeholder: "Enter " + response[0].placeholder, name: name1 + cardid + fieldId, minlength: response[0].minlength, maxlength: response[0].maxlength, minrange: response[0].minrange, maxrange: response[0].maxrange, minsize: response[0].minsize, maxsize: response[0].maxsize })
         setData([...arr])
-        // setIndexValue(indexValue+1)
 
     }
 
@@ -167,21 +134,27 @@ const Approval = (props: any) => {
     }
     const handleSelectChange = (i: any, index: any, e: any) => {
         let arr = [...data];
-        arr[i].options[index].data_options = e.target.value;
+        arr[i].options[index].approval_options = e.target.value;
         setData([...arr])
 
     }
-    const handleSelectChange1 = (i: any, index: any, e: any,cardid:any) => {
-        const fieldId = indexValue[cardid]+1;
-        console.log(fieldId,"postI","----",cardid);
-        
-        setIndexValue({...indexValue,[cardid]:fieldId})
+    const handleSelectChange1 = (i: any, index: any, e: any, cardid: any) => {
+        const fieldId = indexValue[cardid] + 1;
+
+        setIndexValue({ ...indexValue, [cardid]: fieldId })
         let arr = [...data];
-        const selectData = response.find((m: any) => m.fieldname === e.target.value)
-        arr[i].section1[index].type = selectData?.type;
-        arr[i].section1[index].label = selectData?.fieldname;
-        arr[i].section1[index].name = selectData?.name+cardid+fieldId ;
-        arr[i].section1[index].toggle = selectData?.validation;
+        const selectData = response.find((m: any) => m.field_name === e.target.value)
+        let name1 = (selectData?.field_name.split(" ")).join('_').toLowerCase()
+        arr[i].section1[index].type = selectData?.type.toLowerCase();
+        arr[i].section1[index].label = selectData?.field_name;
+        arr[i].section1[index].name = name1 + cardid + fieldId;
+        arr[i].section1[index].toggle = false;
+        arr[i].section1[index].minlength = selectData?.minlength;
+        arr[i].section1[index].maxlength = selectData?.maxlength;
+        arr[i].section1[index].minrange = selectData?.minrange;
+        arr[i].section1[index].maxrange = selectData?.maxrange;
+        arr[i].section1[index].minsize = selectData?.minsize;
+        arr[i].section1[index].maxsize = selectData?.maxsize;
         arr[i].section1[index].placeholder = "Enter " + selectData?.placeholder;
         setData([...arr])
     }
@@ -191,173 +164,135 @@ const Approval = (props: any) => {
         setData([...arr])
     }
     const getPreview = (inputValue: any) => {
-        setGlobalData({
-            ...globalData,
-            user: { formDetails: inputValue, data: data }
-        })
-        let localData:any = localStorage.getItem("dummyData")? JSON.parse(localStorage.getItem("dummyData") || '' ) : [];
-        localData.push({user: { formDetails: inputValue, data: data }})
-        localStorage.setItem('dummyData',JSON.stringify(localData))
+        if (inputValue.form_title && inputValue.form_description) {
+            setGlobalData({
+                ...globalData,
+                user: { formDetails: inputValue, data: data }
+            })
+            let localData: any = localStorage.getItem("dummyData") ? JSON.parse(localStorage.getItem("dummyData") || '') : [];
+            localData.push({ user: { formDetails: inputValue, data: data } })
+            localStorage.setItem('dummyData', JSON.stringify(localData))
+            push("/form")
+        }
+        else {
+            setError(true)
+        }
+
+    }
+    const getCancel = () => {
         push("/form")
-
-
     }
 
     return (
         <>
             <Container>
                 <div className="row">
-                    <div className="col-lg-3 col-sm-12">
-                        <div className={styles.cards} >
-                            <h5 className="card-title">Admin Menu</h5>
-                            <p className={styles.attendanceContainer}>
-                                <MdEditCalendar className={styles.iconStyle} />
-                                <span className={styles.textStyle}>Attendance Manual</span>
-                            </p>
-                            <p className={styles.attendanceContainer}>
-                                <BiBarChartAlt2 className={styles.iconStyle} />
-                                <span className={styles.textStyle}>Company Status</span>
-                            </p>
-                            <p className={styles.attendanceContainer}>
-                                <BsBuilding className={styles.iconStyle} />
-                                <span className={styles.textStyle}>Department</span>
-                            </p>
-                            <p className={styles.attendanceContainer}>
-                                <BsBuilding className={styles.iconStyle} />
-                                <span className={styles.textStyle}>Designation</span>
-                            </p>
-                            <p className={styles.attendanceContainer}>
-                                <HiBuildingOffice2 className={styles.iconStyle} />
-                                <span className={styles.textStyle}>Office Branch</span>
-                            </p>
-                            <p className={styles.attendanceContainer}>
-                                <FaPeopleLine className={styles.iconStyle} />
-                                <span className={styles.textStyle}>Relation</span>
-                            </p>
-
-                            <p className={styles.attendanceContainer}>
-                                <BsBuilding className={styles.iconStyle} />
-                                <span className={styles.textStyle}>role</span>
-                            </p>
-                            <p className={styles.attendanceContainer}>
-                                <BsBuilding className={styles.iconStyle} />
-                                <span className={styles.textStyle}>team leave request</span>
-                            </p>
-                            <p className={styles.attendanceContainer}>
-                                <BsBuilding className={styles.iconStyle} />
-                                <span className={styles.textStyle}>Team Regularization request</span>
-                            </p>
-                            <p className={styles.attendanceContainer}>
-                                <BsBuilding className={styles.iconStyle} />
-                                <span className={styles.textStyle}>Technology</span>
-                            </p>
-                            <p className={styles.attendanceContainer}>
-                                <BsBuilding className={styles.iconStyle} />
-                                <span className={styles.textStyle}>Tenant</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div className="col-lg-9 col-sm-12">
+                    <div className="col-lg-12 col-sm-12">
 
                         <div className={styles.cardbody} >
                             <div >
-                                <div className={styles.buttonContainer1}>
-                                    <h5 className={styles.cardtitle}>Form Title</h5>
-                                    <Button onClick={() => getPreview(inputValue)}>
-                                        Submit
-                                    </Button>
+                                <Grid item xs={12} sm={12} md={12} lg={12} sx={{ display: 'flex', justifyContent: 'space-between' }} >
+                                    <h3 className={styles.cardtitle}><b>Form Title</b></h3>
+                                    <Grid item xs={12} sm={12} md={12} lg={12} sx={{ display: 'flex', justifyContent: 'end' }} >
+                                        <Button style={{ height: '35px', marginRight: '5px', backgroundColor: 'black', color: "#ffffff",border:0}} onClick={getCancel}>
+                                            Cancel
+                                        </Button>
+                                        <Button style={{ height: '35px', marginRight: '5px', backgroundColor: 'primary', color: "#ffffff" }} onClick={() => getPreview(inputValue)}>
+                                            Submit
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                                <div>
+                                    <div className={styles.cardtext}>
+                                        <TextField
+                                            id="formtitle"
+                                            className={styles.inputField}
+                                            variant="standard"
+                                            placeholder='Form Title'
+                                            InputProps={{ disableUnderline: true }}
+                                            fullWidth
+                                            name="form_title"
+                                            value={inputValue.form_title}
+                                            onChange={handleInputChange}
+                                        />
+                                    </div>
+                                    {(error && !inputValue.form_title) && <span className={styles.errortext}>form title is required!</span>}
                                 </div>
-                                <div className={styles.cardtext}>
-                                    <TextField
-                                        id="formtitle"
-                                        className={styles.inputField}
-                                        variant="standard"
-                                        placeholder='Form Title'
-                                        InputProps={{ disableUnderline: true }}
-                                        fullWidth
-                                        name="form_title"
-                                        value={inputValue.form_title}
-                                        onChange={handleInputChange}
-                                    />
-                                </div>
-                                <div className={styles.cardtext}>
-                                    <TextField
-                                        id="formDescription"
-                                        className={styles.inputField}
-                                        variant="standard"
-                                        placeholder='Form Descripion'
-                                        InputProps={{ disableUnderline: true }}
-                                        fullWidth
-                                        name='form_description'
-                                        value={inputValue.form_description}
-                                        onChange={handleInputChange}
-                                        minRows={4}
-                                        multiline={true}
-                                    />
+                                <div>
+                                    <div className={styles.cardtext}>
+                                        <TextField
+                                            id="formDescription"
+                                            className={styles.inputField}
+                                            variant="standard"
+                                            placeholder='Form Descripion'
+                                            InputProps={{ disableUnderline: true }}
+                                            fullWidth
+                                            name='form_description'
+                                            value={inputValue.form_description}
+                                            onChange={handleInputChange}
+                                            minRows={4}
+                                            multiline={true}
+                                        />
+                                    </div>
+                                    {(error && !inputValue.form_description) && <span className={styles.errortext}>form description is required!</span>}
                                 </div>
 
 
                             </div>
                         </div>
-                        {data?.length && data?.map((e: any, i: any) => (<div>
-                            <div className={styles.buttonContainer}>
-                                <Button className={styles.button} onClick={() => handleAddClick(i)}>
-                                    Add
-                                </Button>
-
-
-                                <div className={styles.buttonSpace} />
-
-                                <Button className={styles.button} onClick={() => handleDeleteClick(i)}>
-                                    Delete
-                                </Button>
-
-
-                                <div className={styles.buttonSpace} />
-
-                                <Button className={styles.button} onClick={handleEditClick}>
-                                    Edit
-                                </Button>
-                            </div>
-
-                            <div>
-                                <div className={styles.approvalName}>
-                                    <TextField
-                                        id="fieldName"
-                                        className={styles.customInput}
-                                        placeholder="Enter Field Name"
-                                        InputProps={{ disableUnderline: true }}
-                                        // value={val.label}
-                                        onChange={(e) => handleInput(i, e)}
-                                    />
-                                    <RadioGroup row value={e.layout} onChange={(event: any) => handleChangeLayout(i, event)}>
-                                        <FormControlLabel
-                                            control={<Radio />}
-                                            label={
-                                                <Typography variant="body1" fontWeight="bold">
-                                                    2 Box Layout
-                                                </Typography>
-                                            }
-                                            value="2 Box Layout"
-                                            className={styles.sequent}
-                                        />
-                                        <FormControlLabel
-                                            control={<Radio />}
-                                            label={
-                                                <Typography variant="body1" fontWeight="bold">
-                                                    3 Box Layout
-                                                </Typography>
-                                            }
-                                            value="3 Box Layout"
-                                        />
-                                    </RadioGroup>
+                        {data?.map((e: any, i: any) => (<div>
+                            <div className={styles.buttonContainerCircle}>
+                                <div>
+                                    <Button className={styles.buttonplus} onClick={() => handleAddClick(i)} style={{ marginRight: 10 }}>
+                                        < Add className={styles.buttonadd} />
+                                    </Button>
+                                </div>
+                                <div>
+                                    <Button className={styles.buttonplus} onClick={() => handleDeleteClick(i)}>
+                                        <Remove className={styles.buttonadd} />
+                                    </Button>
                                 </div>
                             </div>
                             <div>
                                 <div className={styles.card}>
                                     <div className={styles.row}>
+                                        <div>
+                                            <div className={styles.approvalName}>
+                                                <div>
+                                                    <TextField
+                                                        id="fieldName"
+                                                        className={styles.customInput}
+                                                        placeholder="Enter Card Title"
+                                                        InputProps={{ disableUnderline: true }}
+                                                        value={e.heading}
+                                                        onChange={(e: any) => handleInput(i, e)}
+                                                    />
+                                                </div>
+                                                <RadioGroup row value={e.layout} onChange={(event: any) => handleChangeLayout(i, event)}>
+                                                    <FormControlLabel
+                                                        control={<Radio />}
+                                                        label={
+                                                            <Typography variant="body1" fontWeight="bold">
+                                                                2 Box Layout
+                                                            </Typography>
+                                                        }
+                                                        value="2 Box Layout"
+                                                        className={styles.sequent}
+                                                    />
+                                                    <FormControlLabel
+                                                        control={<Radio />}
+                                                        label={
+                                                            <Typography variant="body1" fontWeight="bold">
+                                                                3 Box Layout
+                                                            </Typography>
+                                                        }
+                                                        value="3 Box Layout"
+                                                    />
+                                                </RadioGroup>
+                                            </div>
+                                        </div>
                                         <div className={styles.approvalName}>
-                                            <p>Approval</p>
+                                            <p style={{ fontWeight: 800, fontSize: '16px',marginTop:'revert' }}>Approval</p>
                                             <div className={styles.buttonContainer}>
                                                 <div className={styles.btn_length}>
                                                     <Checkbox
@@ -365,7 +300,7 @@ const Approval = (props: any) => {
                                                         onChange={(event: any) => multipleChange(i, event)}
                                                         inputProps={{ 'aria-label': 'controlled' }}
                                                     />
-                                                    <p>Multiple</p>
+                                                    <p className={styles.mtmr}>Multiple</p>
                                                 </div>
                                                 <RadioGroup row value={e.approval} onChange={(event: any) => handleChange(i, event)}>
                                                     <FormControlLabel
@@ -393,7 +328,7 @@ const Approval = (props: any) => {
                                     </div>
                                     {e?.options?.map((val: any, index: any) => (<div className={styles.person}>
                                         <div>
-                                            <Select className={styles.customSelect} value={val.data_options} onChange={(event: any) => handleSelectChange(i, index, event)}>
+                                            <Select className={styles.dropSelect} value={val.approval_options} onChange={(event: any) => handleSelectChange(i, index, event)}>
 
                                                 {dataOption.map((v: any, index: any) => (
                                                     <MenuItem value={v.id} >
@@ -406,10 +341,12 @@ const Approval = (props: any) => {
                                             </Select>
                                         </div>
                                         <div className={styles.buttontonggle}>
-                                            <div>
-                                                <Button className={styles.buttonplus} onClick={() => addDropdown(i, index)}>
-                                                    < Add className={styles.buttonadd} />
-                                                </Button>
+                                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                                <div>
+                                                    <Button className={styles.buttonplus} onClick={() => addDropdown(i, index)}>
+                                                        < Add className={styles.buttonadd} />
+                                                    </Button>
+                                                </div>
                                             </div>
                                             <div>
                                                 <Button className={styles.buttonplus} onClick={() => removeDropdown(i, index)}>
@@ -424,17 +361,17 @@ const Approval = (props: any) => {
 
                                             <div className={styles.textopt}>
 
-                                                <Select className={styles.customSelect} value={val.label} onChange={(event: any) => handleSelectChange1(i, index, event,e.id)}>
+                                                <Select className={styles.dropSelect} value={val.label} onChange={(event: any) => handleSelectChange1(i, index, event, e.id)}>
                                                     {typeOptions.map((t: any) => (
-                                                        <MenuItem value={t.fieldname}>
+                                                        <MenuItem value={t.field_name}>
                                                             <Typography variant="body1" fontWeight="bold">
-                                                                {t.fieldname}
+                                                                {t.field_name}
                                                             </Typography>
                                                         </MenuItem>
                                                     ))}
                                                 </Select>
                                             </div>
-                                            <div className={styles.labelAndToggleContainer}>
+                                            <div className={styles.labelAndToggleContainer} style={{marginLeft:'22px'}}>
                                                 <label htmlFor="toggleContainer"><b>Required</b></label>
                                                 <Switch
                                                     checked={val.toggle}
@@ -444,9 +381,9 @@ const Approval = (props: any) => {
 
                                                 />
                                             </div>
-                                            <div className={styles.buttontonggle}>
+                                            <div className={styles.buttontonggle} style={{marginLeft:'10px'}}>
                                                 <div>
-                                                    <Button className={styles.buttonplus} onClick={() => addInputDropdown(i, index,e.id)}>
+                                                    <Button className={styles.buttonplus} onClick={() => addInputDropdown(i, index, e.id)}>
                                                         < Add className={styles.buttonadd} />
                                                     </Button>
                                                 </div>
@@ -465,6 +402,7 @@ const Approval = (props: any) => {
                 </div>
 
             </Container>
+            
 
         </>
     )
