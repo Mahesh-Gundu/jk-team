@@ -1,0 +1,26 @@
+.errortext{
+    color: red;
+    margin-left: 14px;
+    font-size: 12px;
+    margin-top: 1px;
+}
+.buttontonggle {
+    width: 100%;
+    margin-bottom: 10px;
+    display: flex;
+  }
+
+.buttonplus{
+background-color: white !important;
+border-radius: 50% !important;
+margin-right: 8px;
+}
+
+.buttonadd{
+color:black;
+}
+
+.buttons{
+    display: flex;
+    justify-content: end;
+}

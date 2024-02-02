@@ -1,0 +1,47 @@
+.inputfield{
+    box-shadow: 0px 12px 10px -16px;
+    border-radius: 8px;
+}
+
+.errortext{
+    color: red;
+    margin-left: 14px;
+    font-size: 12px;
+    margin-top: 1px;
+}
+.errortext{
+    color: red;
+    margin-left: 14px;
+    font-size: 12px;
+    margin-top: 1px;
+}
+.buttontonggle {
+    width: 100%;
+    margin-bottom: 10px;
+    display: flex;
+  }
+
+.buttonplus{
+background-color: white !important;
+border-radius: 50% !important;
+height: 35px;
+width: 35px;
+}
+
+.buttonadd{
+color: black;
+margin-left: -4px;
+}
+
+.buttons{
+    display: flex;
+    justify-content: end;
+    margin-top: -1px;
+}
+.buttoncontainercircle{
+    display: flex;
+    justify-content: flex-end;
+    margin-left: 36px;
+}
+
+

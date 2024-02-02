@@ -1,0 +1,324 @@
+// @import "../../styles/.scss";
+
+.card {
+  border: 3px solid #f8f6f6;
+  background-color: #fcfcfc;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardbody {
+  border: 3px solid #f5f2f2;
+  color: #efecec;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cards {
+  padding: 15px;
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.approvalName {
+  display: flex;
+  justify-content: space-between;
+  color: black;
+  font-weight: 600;
+  margin-bottom: 13px;
+  margin-left: 13px; 
+}
+
+.radioGroup {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 13px;
+}
+
+.radioGroup label {
+  font-weight: 600;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.sequent {
+  font-weight: 600;
+}
+
+.dropdown {
+  display: inline-block;
+}
+
+.customSelect .MuiOutlinedInput-notchedOutline {
+  border: none !important;
+}
+
+.customSelect {
+  border: 1px solid white !important;
+  border-radius: 4px;
+  // color: white;
+  border-radius: 5px;
+  border: none !important;
+  width: 175px;
+}
+
+.buttontonggle {
+  display: flex;
+  margin-top: 10px;
+}
+
+.textopt {
+  margin-top: 8px;
+}
+
+.buttontonggle button {
+  margin: 5px;
+  // border-radius: 50%;
+
+}
+.buttonplus{
+  background-color: white !important;
+  border-radius: 50% !important;
+}
+
+.buttonadd{
+  color:black;
+}
+
+.person {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 8px;
+}
+
+.fieldname {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+.customInput {
+  border: 1px solid white;
+  border-radius: 4px;
+  color: white;
+  text-align: center;
+}
+
+.customInput::placeholder {
+  color: white;
+}
+
+
+.customInput:focus {
+  border-top: none;
+}
+
+.buttonGroup {
+
+  display: flex;
+}
+
+.horizontalLine {
+  border-bottom: 1px solid #020202;
+  margin: 10px 0;
+}
+
+
+.toggleContainer {
+  width: 47px;
+  height: 21px;
+  background-color: #ccc;
+  cursor: pointer;
+  border-radius: 10px;
+ 
+}
+
+.toggleBar {
+  width: 21px;
+  height: 96%;
+  border-radius: 10px;
+  background-color: white;
+  transition: transform 0.3s;
+}
+
+.active {
+  transform: translateX(30px);
+}
+
+.cardtitle {
+  color: black;
+  font-weight: 600;
+  padding: 10px;
+}
+
+.cardtext {
+  color: black;
+  font-weight: 700;
+  border: 3px solid #fbf8f8;
+  width: 100%;
+  border-radius: 10px;
+  padding: 10px;
+  display: inline-block;
+}
+
+.labelAndToggleContainer {
+  display: flex;
+  align-items: center;
+}
+
+.labelAndToggleContainer label {
+  margin-right: 10px;
+}
+
+.buttonGroup button {
+  margin: 5px;
+  border-radius: 50%;
+  height: 50px;
+
+}
+
+.buttonGroup button:last-child {
+  margin-right: 0;
+}
+
+.customInput {
+  // width: 250px; 
+  padding: 8px;
+}
+
+.customButton {
+  margin: 5px;
+  /* Adjust the margin as needed */
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  width: 20px;
+  height: 50px;
+  cursor: pointer;
+}
+
+
+@media (max-width: 768px) {
+  .fieldname {
+    flex-direction: column;
+  }
+
+  .customInput,
+  .drop,
+  .labelAndToggleContainer,
+  .buttonGroup {
+    margin-right: 0;
+
+  }
+}
+
+.attendanceContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.iconStyle {
+  color: rgb(53, 147, 224);
+  margin-right: 8px;
+}
+
+@media only screen and (max-width: 600px) {
+  .approvalName {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .card {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .cardbody {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .person {
+    flex-direction: column;
+
+    div {
+      margin-bottom: 10px;
+    }
+
+    .buttonGroup {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .customSelect {
+      width: 100%;
+    }
+  }
+
+  .fieldname {
+    .customInput,
+    .customSelect,
+
+    .buttontonggle {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end; 
+  margin-right: 18px;
+}
+
+.buttonContainer1 {
+  display: flex;
+  justify-content: space-between; 
+  margin-right: 18px;
+  margin-bottom:5px;
+}
+
+.buttonSpace {
+  margin-left: 10px; 
+}
+
+.btn_length{
+  display: flex;
+}
+// @media only screen and (max-width: 768px) {
+//   .fieldname {
+//     display: flex;
+//     justify-content: space-between;
+
+    
+//   }
+//   .toggle{
+//     display: flex;
+//     justify-content: space-between;
+
+//   }
+//   .customInput,
+//     .customSelect{
+//       width: 100%;
+//       margin-bottom: 10px;
+
+//     }
+//     .labelAndToggleContainer
+//     .buttontonggle {
+//       display: flex;
+//       justify-content: space-between;
+//       // width: 100%;
+//       margin-bottom: 10px;
+//     }
+
+// }
