@@ -19,7 +19,8 @@ const Approval = (props: any) => {
     const [indexValue, setIndexValue] = useState<any>({ "1": 1 })
     const [dataOption, setDataOption] = useState<any>([])
     const [inputValue, setInputValue] = useState<any>({ form_title: "", form_description: "" });
-    
+    const nameRegex = /^(?! )[a-zA-Z'-]+(?: [a-zA-Z'-]+)*(?<! )$/;
+    const nameRegex1 = /^[a-zA-Z' -]+$/;
     const handleInputChange = (e: any) => {
         setInputValue({
             ...inputValue,
@@ -164,7 +165,8 @@ const Approval = (props: any) => {
         setData([...arr])
     }
     const getPreview = (inputValue: any) => {
-        if (inputValue.form_title && inputValue.form_description) {
+        
+        if ((inputValue.form_title && inputValue.form_description) &&(nameRegex.test(inputValue.form_title) && nameRegex1.test(inputValue.form_description))) {
             setGlobalData({
                 ...globalData,
                 user: { formDetails: inputValue, data: data }
@@ -216,7 +218,8 @@ const Approval = (props: any) => {
                                             onChange={handleInputChange}
                                         />
                                     </div>
-                                    {(error && !inputValue.form_title) && <span className={styles.errortext}>form title is required!</span>}
+                                    {(error && !inputValue.form_title) && <span className={styles.errortext}>Form Title is Required!</span>}
+                                    {(error && inputValue.form_title && !nameRegex.test(inputValue.form_title)) && <span className={styles.errortext}>Enter Valid Text!</span>}
                                 </div>
                                 <div>
                                     <div className={styles.cardtext}>
@@ -234,7 +237,8 @@ const Approval = (props: any) => {
                                             multiline={true}
                                         />
                                     </div>
-                                    {(error && !inputValue.form_description) && <span className={styles.errortext}>form description is required!</span>}
+                                    {(error && !inputValue.form_description ) && <span className={styles.errortext}>Form Description is Required!</span>}
+                                    {(error && inputValue.form_description && !nameRegex1.test(inputValue.form_description)) && <span className={styles.errortext}>Enter Valid Text!</span>}
                                 </div>
 
 
