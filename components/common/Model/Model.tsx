@@ -4,6 +4,7 @@ import DropdownBody from './Dropdown/Dropdown';
 import DropdownForm from './DropdownForm';
 import DropdownView from './DropdownView';
 import ValidationForm from './Validation/Validation';
+import EmployeeAdd from './Employeeform';
 
 function PopupModal(props: any) {
   const ModelBodyComponent = props.modelCmpnt;
@@ -43,6 +44,8 @@ function PopupModal(props: any) {
                 <DropdownView rowData={props.rowData} onSubmit={onSubmit} getaddDetails={getAddDetails} /> :
                 props.Cmpnt === "validation" ?
                   <ValidationForm rowData={props.rowData} onSubmit={onSubmit} getaddDetails={getAddDetails} /> :
+                  props.Cmpnt === "employee" ?
+                  <EmployeeAdd rowData={props.rowData} onSubmit={onSubmit} getaddDetails={getAddDetails} /> :
                     null}
 
 

@@ -11,6 +11,7 @@ const EmployeeTable = (props:any) => {
     // const { globalData, setGlobalData } = React.useContext(AppContext);
     const [openModal, setOpenModal] = React.useState(false);
     const [openEditModal, setOpenEditModal] = React.useState(false);
+    const [openviewModal, setOpenviewModal] = React.useState(false);
     const [rowData, setRowData] = React.useState<any>({});
     const [getRow , setGetRow] = React.useState<any>();
     const [getRowEdit , setGetRowEdit] = React.useState<any>();
@@ -28,15 +29,18 @@ const EmployeeTable = (props:any) => {
         setGetRowEdit(index);
         setOpenEditModal(true);
     }
+
+   const handleviewClose= () =>
+   {} 
     const columns: readonly any[] = [
         { key: "id", label: "ID", minWidth: 80 },
         { key: "name", label: "Name", minWidth: 140 },
         { key: "email", label: "Email", minWidth: 140 },
-        { key: "department", label: "Department", minWidth: 140 },
-        { key: "designation", label: "Designation", minWidth: 140 },
-        { key: "phonenumber", label: "Phone Number", minWidth: 140 },
-        { key: "officelocality", label: "Office Locality", minWidth: 140 },
-        { key: "password", label: "Password", minWidth: 140 },
+        // { key: "department", label: "Department", minWidth: 140 },
+        // { key: "designation", label: "Designation", minWidth: 140 },
+        { key: "Phone_number", label: "Phone Number", minWidth: 140 },
+        // { key: "off_location", label: "Office Locality", minWidth: 140 },
+        // { key: "password", label: "Password", minWidth: 140 },
         { key: "address", label: "Address", minWidth: 140 },
     ];
 
@@ -45,9 +49,14 @@ const EmployeeTable = (props:any) => {
         // const adddata = [...getRow]
         // adddata.push(val);  
         // setGetRow(adddata)
-        setGetRow([...getRow,val]);
+        setGetRow([val]);
     }
     const editDetails = (val:any,index:any) =>{
+        console.log(val,"******",getRowEdit)
+        getRow[getRowEdit] = val
+    }
+
+    const viewDetails = (val:any,index:any) =>{
         console.log(val,"******",getRowEdit)
         getRow[getRowEdit] = val
     }
@@ -107,7 +116,7 @@ const EmployeeTable = (props:any) => {
                                 showViewModel={true}
                                 deleteAccess={true}
                                 editAccess={true}
-                                showViewAccess={false}
+                                showViewAccess={true}
                             />
                             </Container>
                              </Card>
@@ -116,6 +125,8 @@ const EmployeeTable = (props:any) => {
                 </Container>
                 {openModal && <PopupModal show={openModal} onHide={handleClose} header="Add Employee" add={addDetails} Cmpnt = "employee" />}
                 {openEditModal && <PopupModal show={openEditModal} onHide={handleEditClose} header="Update Employee" rowData={rowData} edit={editDetails} Cmpnt = "employee" />}
+                {openviewModal && <PopupModal show={openviewModal} onHide={handleviewClose} header="View Dropdown" rowData={rowData} view={viewDetails}  Cmpnt = "employee"/>}
+
             </div>
            
         </React.Fragment>
