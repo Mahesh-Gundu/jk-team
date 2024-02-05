@@ -32,6 +32,7 @@ function InputForm(props: any) {
     const [showValidationFileds, setShowValidationFields] = useState(false);
     const [showRangeFileds, setShowRangeFields] = useState(false);
     const [showSizeFileds, setShowSizeFields] = useState(false);
+    const [employeefileds,setEmployeefileds]=useState(false)
     const [errors, setErrors] = useState<any>({});
     const [submitted, setSubmitted] = useState<any>(false);
     console.log("*********", props.rowData);
@@ -240,6 +241,7 @@ function InputForm(props: any) {
             setShowValidationFields(false);
         }
     }, [])
+
     const isFormValid = Object.keys(errors).length === 0;
 
     return (
@@ -388,6 +390,7 @@ function InputForm(props: any) {
                                 </Grid>
                             </Grid>
                         </Grid> : null}
+
                         {showRangeFileds ? <Grid item xs={12} sm={12} md={12} lg={12}>
                             <CMLabel><b>Range</b></CMLabel>
                             <hr />
@@ -420,7 +423,7 @@ function InputForm(props: any) {
                                 </Grid>
                             </Grid>
                         </Grid> : null}
-                    </Grid>
+                            </Grid>
                     <Grid item xs={12} sm={12} md={12} lg={12} sx={{ display: "flex", justifyContent: "end" }}>
                         <Button sx={{ mt: 2 }} variant="contained" color="primary" type="submit">Submit</Button>
                     </Grid>
