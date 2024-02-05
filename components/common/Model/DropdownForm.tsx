@@ -96,9 +96,14 @@ function DropdownForm(props: any) {
     const validateForm = () => {
         let isValid = true;
         const newErrors: any = {};
+        const wordToWordSpaceRegex = /^(?! )[a-zA-Z'-]+(?: [a-zA-Z'-]+)*(?<! )$/;
+
         // Validate field_name
         if (rowdata.field_name == "") {
             newErrors.field_name = "Field name is required!";
+            isValid = false;
+        }else if(rowdata.field_name!='' && !wordToWordSpaceRegex.test(rowdata.field_name)){
+            newErrors.field_name = "Enter valid text";
             isValid = false;
         }
         // Validate options
@@ -190,7 +195,7 @@ function DropdownForm(props: any) {
                                                 <div className={styles.buttons} >
                                                     <div className={styles.buttoncontainercircle}>
                                                         <div style={{marginRight:"11px"}}>
-                                                            <Button className={styles.buttonplus} onClick={() => addField(ind)} spacing={3}>
+                                                            <Button className={styles.buttonplus} onClick={() => addField(ind)}>
                                                                 <Add className={styles.buttonadd} />
                                                             </Button>
                                                         </div>

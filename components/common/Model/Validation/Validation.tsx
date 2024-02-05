@@ -52,9 +52,15 @@ function ValidationForm(props: any) {
     const validateForm = () => {
         let isValid = true;
         const newErrors: any = {};
+        
+        const wordToWordSpaceRegex = /^(?! )[a-zA-Z'-]+(?: [a-zA-Z'-]+)*(?<! )$/;
+
         // Validate field_name
         if (rowdata.validation == "") {
             newErrors.validation = "Validation Label is required!";
+            isValid = false;
+        }else if(rowdata.validation!='' && !wordToWordSpaceRegex.test(rowdata.validation)){
+            newErrors.validation = "Enter valid text";
             isValid = false;
         }
         // Validate placeholder

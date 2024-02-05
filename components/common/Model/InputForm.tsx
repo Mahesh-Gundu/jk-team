@@ -12,44 +12,29 @@ function InputForm(props: any) {
         field_name: "",
         placeholder: "",
         type: {
-            id:"",
-            label:"",
+            id: "",
+            label: "",
         },
-        minlength: 0,
+        minlength: "0",
         maxlength: "",
         validation: "",
-        minrange: 0,
+        minrange: "0",
         maxrange: "",
-        minsize: 0,
+        minsize: "0",
         maxsize: "",
     });
     // const RequiredChange = (field: any, e: any) => {
     //     console.log(e.target.checked)
     // }
     console.log(closeModal, "closeModal")
-
     const [TypeOption, setTypeOption] = useState([]);
     const [ValidationOption, setValidationOption] = useState([]);
     const [showValidationFileds, setShowValidationFields] = useState(false);
     const [showRangeFileds, setShowRangeFields] = useState(false);
     const [showSizeFileds, setShowSizeFields] = useState(false);
     const [errors, setErrors] = useState<any>({});
-    // const [formData, setFormData] = useState({
-    //     field_name: "",
-    //     placeholder: "",
-    //     type: "",
-    //     minlength: "",
-    //     maxlength: "",
-    //     validation: "",
-    //     minrange: "",
-    //     maxrange: "",
-    //     minsize: "",
-    //     maxsize: "",
-    // });
     const [submitted, setSubmitted] = useState<any>(false);
-
     console.log("*********", props.rowData);
-
     const handleChange = (e: any) => {
         console.log(rowdata, "*****");
         console.log(e.target.value.name, "eeeeeeeeeeeeee");
@@ -64,7 +49,6 @@ function InputForm(props: any) {
         console.log("@@@@@@@", name);
         // setRowData({ ...rowdata, [e.target.name]: e.target.value })
     }
-
     const handleChangeNew = (e: any) => {
         console.log(rowdata, "*****");
         console.log(e.target.value.name, "eeeeeeeeeeeeee");
@@ -76,17 +60,17 @@ function InputForm(props: any) {
         setErrors({
             ...errors, [name]: ""
         })
-        if (e.target.value == 1 || e.target.value=="Text") {
+        if (e.target.value == 1 || e.target.value == "Text") {
             setShowValidationFields(true);
             setShowRangeFields(false);
             setShowSizeFields(false);
         }
-        else if (e.target.value == 2 || e.target.value=="Range") {
+        else if (e.target.value == 2 || e.target.value == "Range") {
             setShowRangeFields(true);
             setShowValidationFields(false);
             setShowSizeFields(false);
         }
-        else if (e.target.value == 3 || e.target.value=="File") {
+        else if (e.target.value == 3 || e.target.value == "File") {
             setShowSizeFields(true);
             setShowRangeFields(false);
             setShowValidationFields(false);
@@ -95,20 +79,28 @@ function InputForm(props: any) {
             setShowRangeFields(false);
             setShowValidationFields(false);
         }
-        
         setRowData({ ...rowdata, [e.target.name]: e.target.value })
     }
     const validateForm = () => {
         let isValid = true;
         const newErrors: any = {};
+        // const nameRegex = /^[a-zA-Z'-]+$/;
+        const wordToWordSpaceRegex = /^(?! )[a-zA-Z'-]+(?: [a-zA-Z'-]+)*(?<! )$/;
+        const positiveIntegerRegex = /^[1-9]\d*$/;
         // Validate field_name
         if (rowdata.field_name == "") {
             newErrors.field_name = "Field name is required!";
+            isValid = false;
+        } else if (rowdata.field_name != '' && !wordToWordSpaceRegex.test(rowdata.field_name)) {
+            newErrors.field_name = "Enter valid text";
             isValid = false;
         }
         // Validate placeholder
         if (rowdata.placeholder == "") {
             newErrors.placeholder = "Placeholder is required!";
+            isValid = false;
+        } else if (rowdata.placeholder != '' && !wordToWordSpaceRegex.test(rowdata.placeholder)) {
+            newErrors.placeholder = "Enter valid text";
             isValid = false;
         }
         // Validate type
@@ -116,53 +108,61 @@ function InputForm(props: any) {
             newErrors.type = "Type is required!";
             isValid = false;
         }
-         // Validate Min&Max Lengths
-         if (rowdata.minlength <0 ) {
+        // Validate Min&Max Lengths
+        if (rowdata.minlength < 0) {
             newErrors.minlength = "Enter valid min..length!";
             isValid = false;
-        }else if(Number(rowdata.maxlength) < Number(rowdata.minlength)){
+        } else if (rowdata.maxlength < 0) {
             newErrors.maxlength = "Enter valid max..length!";
             isValid = false;
         }
-        else if (rowdata.minlength && rowdata.maxlength == "" ) {
-            newErrors.maxlength = "Enter valid max..length!";
-            isValid = false;
-        }else if(rowdata.maxlength && rowdata.minlength == "" ){
+        else if (rowdata.minlength && rowdata.maxlength) {
+            if (Number(rowdata.maxlength) < Number(rowdata.minlength)) {
+                newErrors.maxlength = "Enter max..length is more than min..length!";
+                isValid = false;
+            }
+        }
+        else if (rowdata.maxlength && rowdata.minlength == "") {
             newErrors.minlength = "Enter valid min..length!";
             isValid = false;
         }
-            // Validate Min&Max Range
-            if (rowdata.minrange <0 ) {
-                newErrors.minrange = "Enter valid min..range!";
-                isValid = false;
-            }else if(Number(rowdata.maxrange) < Number(rowdata.minrange)){
-                newErrors.maxrange = "Enter valid max..range!";
-                isValid = false;
-            }
-            else if (rowdata.minrange && rowdata.maxrange == "" ) {
-                newErrors.maxrange = "Enter valid max..range!";
-                isValid = false;
-            }else if(rowdata.maxrange && rowdata.minrange == "" ){
-                newErrors.minrange = "Enter valid min..range!";
+        // Validate Min&Max Range
+        if (rowdata.minrange < 0) {
+            newErrors.minrange = "Enter valid min..range!";
+            isValid = false;
+        } else if (rowdata.maxrange < 0) {
+            newErrors.maxrange = "Enter valid max..range!";
+            isValid = false;
+        }
+        else if (rowdata.minrange && rowdata.maxrange) {
+            if (Number(rowdata.maxrange) < Number(rowdata.minrange)) {
+                newErrors.maxrange = "Enter max..range is more than min..range!";
                 isValid = false;
             }
-                // Validate Min&Max size
-         if (rowdata.minsize <0 ) {
+        }
+        else if (rowdata.maxrange && rowdata.minrange == "") {
+            newErrors.minrange = "Enter valid min..range!";
+            isValid = false;
+        }
+        // Validate Min&Max size
+        if (rowdata.minsize < 0) {
             newErrors.minsize = "Enter valid min..size!";
             isValid = false;
-        }else if(Number(rowdata.maxsize) < Number(rowdata.minsize)){
+        } else if (rowdata.maxsize < 0) {
             newErrors.maxsize = "Enter valid max..size!";
             isValid = false;
         }
-        else if (rowdata.minsize && rowdata.maxsize == "" ) {
-            newErrors.maxsize = "Enter valid max..size!";
-            isValid = false;
-        }else if(rowdata.maxsize && rowdata.minsize == "" ){
+        else if (rowdata.minsize && rowdata.maxsize) {
+            if (Number(rowdata.maxsize) < Number(rowdata.minsize)) {
+                newErrors.maxsize = "Enter max..size is more than min..size!";
+                isValid = false;
+            }
+        }
+        else if (rowdata.maxsize && rowdata.minsize == "") {
             newErrors.minsize = "Enter valid min..size!";
             isValid = false;
         }
         console.log({ newErrors }, "kjhgfds");
-    
         setErrors(newErrors);
         return isValid;
     };
@@ -180,7 +180,6 @@ function InputForm(props: any) {
             // Form is not valid, display error messages
         }
     };
-
     React.useEffect(() => {
         // setGlobalData({
         //   ...globalData,
@@ -204,8 +203,6 @@ function InputForm(props: any) {
             //   });
         })
         // })
-
-
         getValidationData().then((res: any) => {
             //   setGlobalData({
             //     ...globalData,
@@ -223,18 +220,17 @@ function InputForm(props: any) {
             //     errorMessage: "Failed to load data"
             //   });
         })
-
-        if (props?.rowData?.type == 1 || props?.rowData?.type=="Text") {
+        if (props?.rowData?.type == 1 || props?.rowData?.type == "Text") {
             setShowValidationFields(true);
             setShowRangeFields(false);
             setShowSizeFields(false);
         }
-        else if (props?.rowData?.type == 2 || props?.rowData?.type=="Range") {
+        else if (props?.rowData?.type == 2 || props?.rowData?.type == "Range") {
             setShowRangeFields(true);
             setShowValidationFields(false);
             setShowSizeFields(false);
         }
-        else if (props?.rowData?.type == 3 || props?.rowData?.type=="File") {
+        else if (props?.rowData?.type == 3 || props?.rowData?.type == "File") {
             setShowSizeFields(true);
             setShowRangeFields(false);
             setShowValidationFields(false);
@@ -243,11 +239,8 @@ function InputForm(props: any) {
             setShowRangeFields(false);
             setShowValidationFields(false);
         }
-
     }, [])
-
     const isFormValid = Object.keys(errors).length === 0;
-
 
     return (
         <>
@@ -315,7 +308,6 @@ function InputForm(props: any) {
                                 name="required"
                             />
                     </Grid> */}
-
                         {showValidationFileds ? <Grid item xs={12} sm={12} md={12} lg={12}>
                             <CMLabel><b>Validation</b></CMLabel>
                             <hr />
@@ -331,7 +323,7 @@ function InputForm(props: any) {
                                         value={rowdata?.minlength}
                                         type="number"
                                     />
-                                      {errors.minlength && <div className={styles.errortext}>{errors.minlength}</div>}
+                                    {errors.minlength && <div className={styles.errortext}>{errors.minlength}</div>}
                                 </Grid>
                                 <Grid item xs={12} sm={4} md={4} lg={4}>
                                     <CMLabel>Maximum Length</CMLabel>
@@ -344,7 +336,7 @@ function InputForm(props: any) {
                                         value={rowdata?.maxlength}
                                         type="number"
                                     />
-                                      {errors.maxlength && <div className={styles.errortext}>{errors.maxlength}</div>}
+                                    {errors.maxlength && <div className={styles.errortext}>{errors.maxlength}</div>}
                                 </Grid>
                                 <Grid item xs={12} sm={4} md={4} lg={4}>
                                     <CMLabel>Validation</CMLabel>
@@ -364,13 +356,12 @@ function InputForm(props: any) {
                                 </Grid>
                             </Grid>
                         </Grid> : null}
-
                         {showSizeFileds ? <Grid item xs={12} sm={12} md={12} lg={12}>
                             <CMLabel><b>File Size</b></CMLabel>
                             <hr />
                             <Grid container spacing={3}>
                                 <Grid item xs={12} sm={6} md={6} lg={6}>
-                                    <CMLabel>Minimum Size</CMLabel>
+                                    <CMLabel>Minimum Size(MB)</CMLabel>
                                     <TextField
                                         placeholder='Enter Min..Size'
                                         size="small"
@@ -383,7 +374,7 @@ function InputForm(props: any) {
                                     {errors.minsize && <div className={styles.errortext}>{errors.minsize}</div>}
                                 </Grid>
                                 <Grid item xs={12} sm={6} md={6} lg={6}>
-                                    <CMLabel>Maximum Size</CMLabel>
+                                    <CMLabel>Maximum Size(MB)</CMLabel>
                                     <TextField
                                         placeholder='Enter Max..Size'
                                         size="small"
@@ -393,11 +384,10 @@ function InputForm(props: any) {
                                         value={rowdata?.maxsize}
                                         type="number"
                                     />
-                                     {errors.maxsize && <div className={styles.errortext}>{errors.maxsize}</div>}
+                                    {errors.maxsize && <div className={styles.errortext}>{errors.maxsize}</div>}
                                 </Grid>
                             </Grid>
                         </Grid> : null}
-
                         {showRangeFileds ? <Grid item xs={12} sm={12} md={12} lg={12}>
                             <CMLabel><b>Range</b></CMLabel>
                             <hr />
@@ -425,7 +415,6 @@ function InputForm(props: any) {
                                         onChange={handleChange}
                                         value={rowdata?.maxrange}
                                         type="number"
-                                        
                                     />
                                     {errors.maxrange && <div className={styles.errortext}>{errors.maxrange}</div>}
                                 </Grid>
