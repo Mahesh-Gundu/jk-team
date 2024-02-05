@@ -140,7 +140,6 @@ const TableList = (props: any) => {
     //         optionData.push(data.value)
     //     })
     // });
-
     console.log(optionData, "optionData")
     return (
         <>
@@ -182,17 +181,40 @@ const TableList = (props: any) => {
                                         {columns.map((column: any) => {
                                             const value = row[column.key];
                                             return (
+                                                //     <TableCell key={column.id} align={column.align}>
+                                                //     {column.format && typeof value === 'number'
+                                                //         ? column.format(value)
+                                                //         : column.key=='options' && typeof value === 'object' ?
+                                                //             ( value.slice(0,3).map((v: any) => v.value + "," 
+                                                //             // && (v.value?.length>1) ? "...see more":''
+                                                //             ) + "...Seemore"
+                                                //             ) 
+                                                //             // :(value.length>1)? "seemore"
+                                                //             : value}
+                                                // </TableCell>
                                                 <TableCell key={column.id} align={column.align}>
                                                     {column.format && typeof value === 'number'
                                                         ? column.format(value)
-                                                        : typeof value === 'object' ?
-                                                            ( value.slice(0,3).map((v: any) => v.value + "," 
-                                                            // && (v.value?.length>1) ? "...see more":''
-                                                            ) + "...Seemore"
-                                                            ) 
-                                                            // :(value.length>1)? "seemore"
-                                                            : value}
+                                                        : column.key === 'options' && typeof value === 'object' ? (
+                                                            <>
+                                                                {value.slice(0, 3).map((v: any) => v.value + ', ')}
+                                                                {value.length > 3 && (
+                                                                    <Button
+                                                                        color="primary"
+                                                                        size="small"
+                                                                        className='seemore'
+                                                                        onClick={() => props.viewClick(row, index)}
+                                                                        value="seemore"
+                                                                    >
+                                                                        ...See More
+                                                                    </Button>
+                                                                )}
+                                                            </>
+                                                        ) : (
+                                                            value
+                                                        )}
                                                 </TableCell>
+
 
                                             );
                                         })}

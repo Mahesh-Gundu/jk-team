@@ -89,7 +89,7 @@ const DropdownTable = (props:any) => {
                                 rows={getRow}
                                 columns={columns}
                                 delete={handleDelete}
-                                showViewAccess={true}
+                                showViewAccess={false}
                                 deleteAccess={true}
                                 editAccess={true}
                                 viewClick = {handleView}
