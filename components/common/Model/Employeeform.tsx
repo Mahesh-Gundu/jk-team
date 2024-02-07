@@ -4,13 +4,27 @@ import { CMLabel } from "../Form/FormLabels";
 import { PageHeader } from '@/components/common/PageHeader/PageHeader';
 import { Box } from '@mui/material';
 import { Container } from "react-bootstrap";
+import styles from "./InputForm.module.scss"
+
 
 // import { AppContext } from "../Context/AppContext";
 
 function EmployeeAdd(props: any) {
     // const { globalData, setGlobalData } = React.useContext(AppContext);
     const [closeModal, setCloseModal] = React.useState(false);
-    const [rowdata, setRowData] = React.useState(props.rowData || {});
+    const [errors, setErrors] = useState<any>({});
+    const [rowdata, setRowData] = React.useState(props.rowData || {
+        name: "",
+        email: "",
+        Phone_number: '',
+        address: "",
+        id: "",
+        password: "",
+        validation: "",
+        designation: "",
+        department: "",
+        off_location: "",
+    });
     // const RequiredChange = (field: any, e: any) => {
     //     console.log(e.target.checked)
     // }
@@ -58,12 +72,76 @@ function EmployeeAdd(props: any) {
     const handleChange = (e: any) => {
         console.log(rowdata, "*****");
         setRowData({ ...rowdata, [e.target.name]: e.target.value })
+        setErrors({
+            ...errors, [e.target.name]: ""
+        })
     }
+    const validateForm = () => {
+        let isValid = true;
+        const newErrors: any = {};
+        // const nameRegex = /^[a-zA-Z'-]+$/;
+        // Validate name
+        if (rowdata.name == "") {
+            newErrors.name = "Name is required!";
+            isValid = false;
+        } 
+        if (rowdata.password == "") {
+            newErrors.password = "Password is required!";
+            isValid = false;
+        }
+        if (rowdata.Phone_number == "") {
+            newErrors.Phone_number = "Phone Number is required!";
+            isValid = false;
+        }
+        if (rowdata.address == "") {
+            newErrors.address = "Address is required!";
+            isValid = false;
+        }
+        if (rowdata.id == "") {
+            newErrors.id = "Id is required!";
+            isValid = false;
+        }
+        if (rowdata.email == "") {
+            newErrors.email = "Email is required!";
+            isValid = false;
+        }
+        // Validate type
+        console.log(rowdata.validation,"vvvv")
+        if (rowdata.validation == "") {
+            newErrors.validation = "Validation is required!";
+            isValid = false;
+        }
+        if (rowdata.designation == "") {
+            newErrors.designation = "Designation is required!";
+            isValid = false;
+        }
+        if (rowdata.department == "") {
+            newErrors.department = "Department is required!";
+            isValid = false;
+        }
+        if (rowdata.off_location == "") {
+            newErrors.off_location = "Office Location is required!";
+            isValid = false;
+        }
+        
+        console.log({ newErrors }, "kjhgfds");
+        setErrors(newErrors);
+        return isValid;
+    };
     const handleSubmit = (e: any) => {
-        // e.preventDefault();
-        setCloseModal(false);
-        props.onSubmit(rowdata)
-        console.log(rowdata, "@@@@@@@")
+        e.preventDefault();
+        // setCloseModal(false);
+        // props.onSubmit(rowdata)
+        // console.log(rowdata, "@@@@@@@")
+        if (validateForm()) {
+            // Form is valid, you can submit or process the data here
+            setCloseModal(false);
+            props.onSubmit(rowdata)
+            console.log(rowdata, "@@@@@@@")
+        } else {
+            console.log("dfghjk", errors);
+            // Form is not valid, display error messages
+        }
     };
 
     return (
@@ -83,6 +161,7 @@ function EmployeeAdd(props: any) {
                         fullWidth
                         onChange={handleChange}
                     />
+                    {errors.name && <div className={styles.errortext}>{errors.name}</div>}
                 </Grid>
                 <Grid item xs={12} sm={6} md={6} lg={6}>
                     <CMLabel><b>Email</b></CMLabel>
@@ -94,6 +173,7 @@ function EmployeeAdd(props: any) {
                         fullWidth
                         onChange={handleChange}
                     />
+                    {errors.email && <div className={styles.errortext}>{errors.email}</div>}
                 </Grid>
                 <Grid item xs={12} sm={6} md={6} lg={6}>
                     <CMLabel><b>Phone number</b></CMLabel>
@@ -105,6 +185,7 @@ function EmployeeAdd(props: any) {
                         fullWidth
                         onChange={handleChange}
                     />
+                    {errors.Phone_number && <div className={styles.errortext}>{errors.Phone_number}</div>}
                 </Grid>
                 <Grid item xs={12} sm={6} md={6} lg={6}>
                     <CMLabel><b>Address</b></CMLabel>
@@ -116,6 +197,7 @@ function EmployeeAdd(props: any) {
                         fullWidth
                         onChange={handleChange}
                     />
+                    {errors.address && <div className={styles.errortext}>{errors.address}</div>}
                 </Grid>
                 {/* <Grid item xs={12} sm={6} md={6} lg={6}>
                     <CMLabel><b>Designation</b></CMLabel>
@@ -160,6 +242,7 @@ function EmployeeAdd(props: any) {
                         onChange={handleChange}
                         value={rowdata?.id}
                     />
+                    {errors.id && <div className={styles.errortext}>{errors.id}</div>}
                 </Grid>
                 <Grid item xs={12} sm={6} md={6} lg={6}>
                     <CMLabel><b>Password</b></CMLabel>
@@ -171,6 +254,7 @@ function EmployeeAdd(props: any) {
                         onChange={handleChange}
                         value={rowdata?.password}
                     />
+                    {errors.password && <div className={styles.errortext}>{errors.password}</div>}
                 </Grid>
 
                 <Grid item xs={12} sm={6} md={6} lg={6}>
@@ -188,6 +272,7 @@ function EmployeeAdd(props: any) {
                             ))}
                         </Select>
                     </FormControl>
+                    {errors.validation && <div className={styles.errortext}>{errors.validation}</div>}
                 </Grid>
                 <Grid item xs={12} sm={6} md={6} lg={6}>
                     <CMLabel><b>Designation</b></CMLabel>
@@ -204,6 +289,7 @@ function EmployeeAdd(props: any) {
                             ))}
                         </Select>
                     </FormControl>
+                    {errors.designation && <div className={styles.errortext}>{errors.designation}</div>}
                 </Grid>
                 <Grid item xs={12} sm={6} md={6} lg={6}>
                     <CMLabel><b>Department</b></CMLabel>
@@ -219,6 +305,7 @@ function EmployeeAdd(props: any) {
                                 </MenuItem>
                             ))}
                         </Select>
+                        {errors.department && <div className={styles.errortext}>{errors.department}</div>}
                     </FormControl>
                 </Grid>
                 <Grid item xs={12} sm={6} md={6} lg={6}>
@@ -235,6 +322,7 @@ function EmployeeAdd(props: any) {
                                 </MenuItem>
                             ))}
                         </Select>
+                        {errors.off_location && <div className={styles.errortext}>{errors.off_location}</div>}
                     </FormControl>
                 </Grid>
                 {/* <Grid item xs={12} sm={6} md={6} lg={6}>
