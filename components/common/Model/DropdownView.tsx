@@ -13,10 +13,10 @@ function DropdownView(props: any) {
                 return (
                     <> 
                         <Grid container spacing={4} >
-                            <Grid item lg={12} md={12} sm={12} xs={12}>
+                            {/* <Grid item lg={12} md={12} sm={12} xs={12}>
                                 <b>Field Name</b>
                                 <p>{row.field_name}</p>
-                            </Grid>
+                            </Grid> */}
                             <Grid item lg={12} md={12} sm={12} xs={12}>
                                 <b>Options</b>
                                 <div className='d-flex flex-wrap'>

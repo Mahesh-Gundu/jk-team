@@ -150,8 +150,20 @@ function EmployeeAdd(props: any) {
           <Box>
                             {/* <PageHeader header='Employees table'/> */}
                             </Box>
-            <Grid container spacing={3}>
-                <Grid item xs={12} sm={6} md={6} lg={6}>
+            <Grid container spacing={2}>
+            <Grid item xs={12} sm={4} md={4} lg={4}>
+                    <CMLabel><b>Id</b></CMLabel>
+                    <TextField
+                        placeholder='Enter id'
+                        size="small"
+                        name="id"
+                        fullWidth
+                        onChange={handleChange} 
+                        value={rowdata?.id}
+                    />
+                    {errors.id && <div className={styles.errortext}>{errors.id}</div>}
+                </Grid>
+                <Grid item xs={12} sm={4} md={4} lg={4}>
                     <CMLabel><b>Name</b></CMLabel>
                     <TextField
                         value={rowdata?.name}
@@ -163,7 +175,7 @@ function EmployeeAdd(props: any) {
                     />
                     {errors.name && <div className={styles.errortext}>{errors.name}</div>}
                 </Grid>
-                <Grid item xs={12} sm={6} md={6} lg={6}>
+                <Grid item xs={12} sm={4} md={4} lg={4}>
                     <CMLabel><b>Email</b></CMLabel>
                     <TextField
                         value={rowdata?.email}
@@ -175,7 +187,7 @@ function EmployeeAdd(props: any) {
                     />
                     {errors.email && <div className={styles.errortext}>{errors.email}</div>}
                 </Grid>
-                <Grid item xs={12} sm={6} md={6} lg={6}>
+                <Grid item xs={12} sm={4} md={4} lg={4}>
                     <CMLabel><b>Phone number</b></CMLabel>
                     <TextField
                         value={rowdata?.Phone_number}
@@ -187,64 +199,7 @@ function EmployeeAdd(props: any) {
                     />
                     {errors.Phone_number && <div className={styles.errortext}>{errors.Phone_number}</div>}
                 </Grid>
-                <Grid item xs={12} sm={6} md={6} lg={6}>
-                    <CMLabel><b>Address</b></CMLabel>
-                    <TextField
-                        value={rowdata?.address}
-                        placeholder='Enter address'
-                        size="small"
-                        name="address"
-                        fullWidth
-                        onChange={handleChange}
-                    />
-                    {errors.address && <div className={styles.errortext}>{errors.address}</div>}
-                </Grid>
-                {/* <Grid item xs={12} sm={6} md={6} lg={6}>
-                    <CMLabel><b>Designation</b></CMLabel>
-                    <TextField
-                        value={rowdata?.designation}
-                        placeholder='Enter designation'
-                        size="small"
-                        name="designation"
-                        fullWidth
-                        onChange={handleChange}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6} md={6} lg={6}>
-                    <CMLabel><b>Department</b></CMLabel>
-                    <TextField
-                        value={rowdata?.department}
-                        placeholder='Enter department'
-                        size="small"
-                        name="department"
-                        fullWidth
-                        onChange={handleChange}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6} md={6} lg={6}>
-                    <CMLabel><b>Office Locality</b></CMLabel>
-                    <TextField
-                        value={rowdata?.off_location}
-                        placeholder='Enter offlocality'
-                        size="small"
-                        name="off_location"
-                        fullWidth
-                        onChange={handleChange}
-                    />
-                </Grid> */}
-                <Grid item xs={12} sm={6} md={6} lg={6}>
-                    <CMLabel><b>Id</b></CMLabel>
-                    <TextField
-                        placeholder='Enter id'
-                        size="small"
-                        name="id"
-                        fullWidth
-                        onChange={handleChange}
-                        value={rowdata?.id}
-                    />
-                    {errors.id && <div className={styles.errortext}>{errors.id}</div>}
-                </Grid>
-                <Grid item xs={12} sm={6} md={6} lg={6}>
+                <Grid item xs={12} sm={4} md={4} lg={4}>
                     <CMLabel><b>Password</b></CMLabel>
                     <TextField
                         placeholder='Enter password'
@@ -257,7 +212,7 @@ function EmployeeAdd(props: any) {
                     {errors.password && <div className={styles.errortext}>{errors.password}</div>}
                 </Grid>
 
-                <Grid item xs={12} sm={6} md={6} lg={6}>
+                <Grid item xs={12} sm={4} md={4} lg={4}>
                     <CMLabel><b>Validation</b></CMLabel>
                     <FormControl fullWidth >
                         <Select size="small"
@@ -274,7 +229,7 @@ function EmployeeAdd(props: any) {
                     </FormControl>
                     {errors.validation && <div className={styles.errortext}>{errors.validation}</div>}
                 </Grid>
-                <Grid item xs={12} sm={6} md={6} lg={6}>
+                <Grid item xs={12} sm={4} md={4} lg={4}>
                     <CMLabel><b>Designation</b></CMLabel>
                     <FormControl fullWidth >
                         <Select size="small"
@@ -291,7 +246,7 @@ function EmployeeAdd(props: any) {
                     </FormControl>
                     {errors.designation && <div className={styles.errortext}>{errors.designation}</div>}
                 </Grid>
-                <Grid item xs={12} sm={6} md={6} lg={6}>
+                <Grid item xs={12} sm={4} md={4} lg={4}>
                     <CMLabel><b>Department</b></CMLabel>
                     <FormControl fullWidth >
                         <Select size="small"
@@ -308,7 +263,7 @@ function EmployeeAdd(props: any) {
                         {errors.department && <div className={styles.errortext}>{errors.department}</div>}
                     </FormControl>
                 </Grid>
-                <Grid item xs={12} sm={6} md={6} lg={6}>
+                <Grid item xs={12} sm={4} md={4} lg={4}>
                     <CMLabel><b>Office Locality</b></CMLabel>
                     <FormControl fullWidth >
                         <Select size="small"
@@ -325,15 +280,20 @@ function EmployeeAdd(props: any) {
                         {errors.off_location && <div className={styles.errortext}>{errors.off_location}</div>}
                     </FormControl>
                 </Grid>
-                {/* <Grid item xs={12} sm={6} md={6} lg={6}>
-                            <label htmlFor="toggleContainer">Required</label>
-                            <Switch
-                                onChange={(e:any)=>RequiredChange('required',e)}
-                                inputProps={{ 'aria-label': 'controlled' }}
-                                value={required}
-                                name="required"
-                            />
-                    </Grid> */}
+                <Grid item xs={12} sm={12} md={12} lg={12}>
+                    <CMLabel><b>Address</b></CMLabel>
+                    <TextField
+                        value={rowdata?.address}
+                        placeholder='Enter address'
+                        size="small"
+                        name="address"
+                        multiline
+                        minRows={3}
+                        fullWidth
+                        onChange={handleChange}
+                    />
+                    {errors.address && <div className={styles.errortext}>{errors.address}</div>}
+                </Grid>
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={12} sx={{ display: "flex", justifyContent: "end" }}>
                 <Button sx={{ mt: 2 }} variant="contained" color="primary" type="submit" onClick={handleSubmit}>Submit</Button>

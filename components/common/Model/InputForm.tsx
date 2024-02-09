@@ -5,7 +5,7 @@ import { getTypeData, getValidationData } from "@/components/Master/master.servi
 import styles from "./InputForm.module.scss"
 // import { AppContext } from "../Context/AppContext";
 
-function InputForm(props: any) {
+function  InputForm(props: any) {
     // const { globalData, setGlobalData } = React.useContext(AppContext);
     const [closeModal, setCloseModal] = React.useState(false);
     const [rowdata, setRowData] = React.useState(props.rowData || {
@@ -248,7 +248,7 @@ function InputForm(props: any) {
         <>
             {!submitted ?
                 <form onSubmit={(e: any) => handleSubmit(e)}>
-                    <Grid container spacing={3}>
+                    <Grid container spacing={2}>
                         {/* <Grid item xs={12} sm={6} md={6} lg={6}>
                     <CMLabel>Type</CMLabel>
                     <TextField
