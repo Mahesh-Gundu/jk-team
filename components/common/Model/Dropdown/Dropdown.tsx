@@ -52,8 +52,7 @@ function DropdownBody(props: any) {
         },
         validationSchema: yup.object({
             fieldname: yup.string().ensure().required(" Fieldname is required!"),
-            // options: yup.string().required(" Options is required!"),
-            options: yup.array().of(
+             options: yup.array().of(
                 yup.object().shape({
                   value: yup.string().required(" Options is required!"),
                 })

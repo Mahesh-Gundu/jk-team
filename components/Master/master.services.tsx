@@ -1,6 +1,5 @@
 export const getexample = () => {
     return new Promise((resolve, reject) => {
-       
             resolve({data:[
                 // {
                 //     type: "",

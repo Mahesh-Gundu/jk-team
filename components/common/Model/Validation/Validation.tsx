@@ -96,7 +96,7 @@ function ValidationForm(props: any) {
         <>
             {!submitted ?
                 <form onSubmit={(e: any) => handleSubmit(e)}>
-                    <Grid container spacing={3}>
+                    <Grid container spacing={2}>
                         <Grid item xs={12} sm={12} md={12} lg={12}>
                             <CMLabel>Validation Label</CMLabel>
                             <TextField

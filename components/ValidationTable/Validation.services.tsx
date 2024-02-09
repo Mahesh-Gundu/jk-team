@@ -3,15 +3,13 @@ export const getexample = () => {
        
             resolve({data:[
                 // {
-                //     type: "",
-                //     field_name: "",
-                //     placeholder: "",
+                //     validation: "",
+                //     description: "",
                 // },
             ]})
       
     })
 }
-
 
 export const getValidationData = () => {
     return new Promise((resolve, reject) => {

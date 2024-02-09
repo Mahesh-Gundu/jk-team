@@ -24,7 +24,6 @@ function DropdownForm(props: any) {
     console.log(closeModal, "closeModal", props.rowData)
 
     const [errors, setErrors] = useState<any>({});
-
     const [submitted, setSubmitted] = useState<any>(false);
 
     console.log("*********", props.rowData);
@@ -97,7 +96,6 @@ function DropdownForm(props: any) {
         let isValid = true;
         const newErrors: any = {};
         const wordToWordSpaceRegex = /^(?! )[a-zA-Z'-]+(?: [a-zA-Z'-]+)*(?<! )$/;
-
         // Validate field_name
         if (rowdata.field_name == "") {
             newErrors.field_name = "Field name is required!";
@@ -106,25 +104,23 @@ function DropdownForm(props: any) {
             newErrors.field_name = "Enter valid text";
             isValid = false;
         }
-        // Validate options
+        // Validate options 
         console.log(rowdata.options, "@@@@@@@@@@@@")
-        // rowdata?.options?.map((e:any)=>{
-        //     if(e.value=="") {
-        //         newErrors.options = "Options is required!";
-        //         isValid = false;
-        //     }
-        // })
+        rowdata?.options?.map((e:any)=>{
+            if(e.value=="") {
+                newErrors.options = "Options is required!";
+                isValid = false;
+            }
+        })
         // let val = rowdata?.options?.map((e:any)=>{
         //     return e.value
-        // })
+        // }) 
         // console.log(val,"val")
         // if(val="") {
         //     newErrors.options = "Options is required!";
         //     isValid = false;
         // }
-
         console.log({ newErrors }, "newerrors");
-
         setErrors(newErrors);
         return isValid;
     };
@@ -144,22 +140,17 @@ function DropdownForm(props: any) {
             // if (optionArr.value = "") {
             // toast.error("AAAAAAAAAAAAAAAAAAAAAAAAAA");
             // }
-
-
         } else {
             console.log("dfghjk", errors);
         }
     };
-
     const isFormValid = Object.keys(errors).length === 0;
-
 
     return (
         <>
             {!submitted ?
                 <form onSubmit={(e: any) => handleSubmit(e)}>
-                    <Grid container spacing={3}>
-
+                    <Grid container spacing={2}>
                         <Grid item xs={12} sm={12} md={12} lg={12}>
                             <CMLabel>Field Name</CMLabel>
                             <TextField
@@ -188,8 +179,7 @@ function DropdownForm(props: any) {
                                                     fullWidth
                                                     onChange={(e: any) => handleChangeOpt(e, ind)}
                                                 />
-                                                {errors.options && <div className={styles.errortext}>{errors.options}</div>}
-
+                                            {errors.options && <div className={styles.errortext}>{errors.options}</div>}
                                             </Grid>
                                             <Grid item xs={5} sm={3} md={3} lg={3} className={styles.buttons}>
                                                 <div className={styles.buttons} >

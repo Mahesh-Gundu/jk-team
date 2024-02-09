@@ -14,7 +14,7 @@ const DropdownTable = (props:any) => {
     const [openEditModal, setOpenEditModal] = React.useState(false);
     const [viewModal, setViewModal] = React.useState(false);
     const [rowData, setRowData] = React.useState<any>({});
-    const [getRow , setGetRow] = React.useState<any>([]);
+    const [getRow , setGetRow] = React.useState<any>([]); 
     const [getRowEdit , setGetRowEdit] = React.useState<any>();
     const [getRowView , setGetRowView] = React.useState<any>();
     const handleClose = () => setOpenModal(false);
@@ -43,7 +43,7 @@ const DropdownTable = (props:any) => {
         { key: "options", label: "Options", minWidth: 140 },
     ];
 
-    const addDetails = (val:any) =>{
+    const addDetails = (val:any) =>{ 
         console.log(val,"******")
         // const adddata = [...getRow]
         // adddata.push(val);  
