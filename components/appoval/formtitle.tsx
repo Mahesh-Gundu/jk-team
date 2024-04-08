@@ -165,16 +165,20 @@ const Approval = (props: any) => {
         setData([...arr])
     }
     const getPreview = (inputValue: any) => {
-        
-        if ((inputValue.form_title && inputValue.form_description) &&(nameRegex.test(inputValue.form_title) && nameRegex1.test(inputValue.form_description))) {
-            setGlobalData({
-                ...globalData,
-                user: { formDetails: inputValue, data: data }
-            })
-            let localData: any = localStorage.getItem("dummyData") ? JSON.parse(localStorage.getItem("dummyData") || '') : [];
-            localData.push({ user: { formDetails: inputValue, data: data } })
-            localStorage.setItem('dummyData', JSON.stringify(localData))
-            push("/form")
+
+        if ((inputValue.form_title && inputValue.form_description) && (nameRegex.test(inputValue.form_title) && nameRegex1.test(inputValue.form_description))) {
+            for (let i of data) {
+                if (i.heading != "") {
+                    setGlobalData({
+                        ...globalData,
+                        user: { formDetails: inputValue, data: data }
+                    })
+                    let localData: any = localStorage.getItem("dummyData") ? JSON.parse(localStorage.getItem("dummyData") || '') : [];
+                    localData.push({ user: { formDetails: inputValue, data: data } })
+                    localStorage.setItem('dummyData', JSON.stringify(localData))
+                    push("/form")
+                }
+            }
         }
         else {
             setError(true)
@@ -196,7 +200,7 @@ const Approval = (props: any) => {
                                 <Grid item xs={12} sm={12} md={12} lg={12} sx={{ display: 'flex', justifyContent: 'space-between' }} >
                                     <h3 className={styles.cardtitle}><b>Form Title</b></h3>
                                     <Grid item xs={12} sm={12} md={12} lg={12} sx={{ display: 'flex', justifyContent: 'end' }} >
-                                        <Button style={{ height: '35px', marginRight: '5px', backgroundColor: 'black', color: "#ffffff",border:0}} onClick={getCancel}>
+                                        <Button style={{ height: '35px', marginRight: '5px', backgroundColor: 'black', color: "#ffffff", border: 0 }} onClick={getCancel}>
                                             Cancel
                                         </Button>
                                         <Button style={{ height: '35px', marginRight: '5px', backgroundColor: 'primary', color: "#ffffff" }} onClick={() => getPreview(inputValue)}>
@@ -271,6 +275,7 @@ const Approval = (props: any) => {
                                                         value={e.heading}
                                                         onChange={(e: any) => handleInput(i, e)}
                                                     />
+                                                        {(error && !e.heading) && <div><span className={styles.errortext1}>Card Title  is Required!</span></div>}
                                                 </div>
                                                 <RadioGroup row value={e.layout} onChange={(event: any) => handleChangeLayout(i, event)}>
                                                     <FormControlLabel
@@ -406,7 +411,7 @@ const Approval = (props: any) => {
                 </div>
 
             </Container>
-            
+
 
         </>
     )
