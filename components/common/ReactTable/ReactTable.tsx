@@ -16,6 +16,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import style from './ReactTable.module.scss'
 import { CMButton } from '../Button/Button';
 import PopupModal from '../Model/Model';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Modal } from 'react-bootstrap';
+
 
 interface Column {
     id: 'type' | 'field_name' | 'placeholder';
@@ -29,18 +32,18 @@ interface Column {
 //     { id: 'field_name', label: 'Filed Name', minWidth: 170 },
 //     { id: 'placeholder', label: 'Placeholder', minWidth: 170 },
 // ];
-interface Data {
-    type: string;
-    field_name: string;
-    placeholder: string;
-}
-function createData(
-    type: string,
-    field_name: string,
-    placeholder: string,
-): Data {
-    return { type, field_name, placeholder };
-}
+// interface Data {
+//     type: string;
+//     field_name: string;
+//     placeholder: string;
+// }
+// function createData(
+//     type: string,
+//     field_name: string,
+//     placeholder: string,
+// ): Data {
+//     return { type, field_name, placeholder };
+// }
 // const rowsData = [
 //     createData('Type1', 'FN1', "Placeholder1"),
 //     createData('Type2', 'FN2', "Placeholder2"),
@@ -63,7 +66,7 @@ const TableList = (props: any) => {
     const [deleteRow, setDeleteRow] = React.useState(null);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [optionData, setOptionData] = React.useState<any>([]);
-
+    const [smShow, setSmShow] = React.useState(false);
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
     };
@@ -71,7 +74,6 @@ const TableList = (props: any) => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
-
     // const EditModel = (rowsdata:any) => {
     //     // setLoading(true);
 
@@ -124,9 +126,7 @@ const TableList = (props: any) => {
     //         //   });
     //     })
     // }
-
-
-    const deleteItem = () => {
+     const deleteItem = () => {
         props.delete(deleteRow);
         setDeleteRow(null)
         setOpenModal(false)
@@ -203,6 +203,7 @@ const TableList = (props: any) => {
                                                                         color="primary"
                                                                         size="small"
                                                                         className='seemore'
+                                                                        // onClick={() => setSmShow(true)}
                                                                         onClick={() => props.viewClick(row, index)}
                                                                         value="seemore"
                                                                     >
@@ -214,9 +215,7 @@ const TableList = (props: any) => {
                                                             value
                                                         )}
                                                 </TableCell>
-
-
-                                            );
+                                             );
                                         })}
 
                                         <TableCell key={"action"}>
@@ -236,7 +235,6 @@ const TableList = (props: any) => {
                                                         <Button className={style.buttonadj} variant="outlined" value="delete" color='error' size="small" onClick={(e) => confirmDelete(row, false, index)}>Delete</Button>
                                                     </Tooltip>
                                                 </Typography> : null}
-
                                             </FlexDiv>
                                         </TableCell>
                                     </TableRow>
@@ -249,7 +247,6 @@ const TableList = (props: any) => {
                                     </TableCell> : null
                             }
                         </TableBody>
-
                     </Table>
                 </TableContainer>
                 <TablePagination
@@ -278,6 +275,19 @@ const TableList = (props: any) => {
                     <CMButton color="primary" value="Delete" onClick={deleteItem} />
                 </DialogActions>
             </Dialog>
+            {/* <Modal
+        size="sm"
+        show={smShow}
+        onHide={() => setSmShow(false)}
+        aria-labelledby="example-modal-sizes-title-sm"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="example-modal-sizes-title-sm">
+            Small Modal
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>...</Modal.Body>
+      </Modal> */}
 
         </>
     );

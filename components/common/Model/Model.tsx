@@ -1,10 +1,10 @@
 import { Modal } from 'react-bootstrap';
 import InputForm from './InputForm';
-import DropdownBody from './Dropdown/Dropdown';
 import DropdownForm from './DropdownForm';
 import DropdownView from './DropdownView';
 import ValidationForm from './Validation/Validation';
 import EmployeeAdd from './Employeeform';
+import DropdownBody from './Dropdown/Dropdown';
 
 function PopupModal(props: any) {
   const ModelBodyComponent = props.modelCmpnt;
@@ -28,14 +28,12 @@ function PopupModal(props: any) {
 
   return (
     <>
-      <Modal show={props.show} onHide={props.onHide} >
+      <Modal show={props.show} onHide={props.onHide}  size='lg'>
         <Modal.Header closeButton >
           <h5><b>{props.header}</b></h5>
         </Modal.Header>
         <Modal.Body>
           {/* <ModelBodyComponent rowData={props.rowData} onSubmit={onSubmit} getaddDetails={getAddDetails} />  */}
-
-
           {props?.Cmpnt === "master" ?
             <InputForm rowData={props.rowData} onSubmit={onSubmit} getaddDetails={getAddDetails} /> :
             props?.Cmpnt === "dropdown" ?
@@ -44,11 +42,9 @@ function PopupModal(props: any) {
                 <DropdownView rowData={props.rowData} onSubmit={onSubmit} getaddDetails={getAddDetails} /> :
                 props.Cmpnt === "validation" ?
                   <ValidationForm rowData={props.rowData} onSubmit={onSubmit} getaddDetails={getAddDetails} /> :
-                  props.Cmpnt === "employee" ?
+                  props.Cmpnt === "employee" ? 
                   <EmployeeAdd rowData={props.rowData} onSubmit={onSubmit} getaddDetails={getAddDetails} /> :
                     null}
-
-
         </Modal.Body>
       </Modal>
     </>
